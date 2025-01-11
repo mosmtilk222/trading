@@ -1,6 +1,4 @@
 import yfinance as yf
-import pandas as pd
-import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 import numpy as np
 from datetime import datetime, timedelta
@@ -86,17 +84,6 @@ for dia in range(50):
             pendiente_anterior = pendiente_actual
 
 # Imprimir resultados finales
-retorno_total = ((capital_actual - capital_inicial) / capital_inicial) * 100
-print(f"\nSimulación de Trading con ${capital_inicial} iniciales:")
-print(f"Capital final: ${capital_actual:.2f}")
-print(f"Retorno total: {retorno_total:.2f}%")
-print(f"Número de operaciones: {len(operaciones_realizadas)}")
-
-# Log detallado de operaciones
-print("\nLog de operaciones:")
-print("-" * 120)
-print(f"{'Fecha':25} {'Capital Inicial':>15} {'Capital Final':>15} {'Diferencia':>12} {'Rendimiento':>12} {'Precio Entrada':>12} {'Precio Salida':>12} {'Pendiente':>10}")
-print("-" * 120)
 
 for op in operaciones_realizadas:
     fecha = op['fecha'].strftime('%Y-%m-%d %H:%M')
@@ -118,6 +105,11 @@ perdidas_totales = sum(op['capital_despues'] - op['capital_antes'] for op in ope
 operaciones_ganadoras = sum(1 for op in operaciones_realizadas if op['capital_despues'] > op['capital_antes'])
 operaciones_perdedoras = sum(1 for op in operaciones_realizadas if op['capital_despues'] < op['capital_antes'])
 
+retorno_total = ((capital_actual - capital_inicial) / capital_inicial) * 100
+print(f"\nSimulación de Trading con ${capital_inicial} iniciales:")
+print(f"Capital final: ${capital_actual:.2f}")
+print(f"Retorno total: {retorno_total:.2f}%")
+print(f"Número de operaciones: {len(operaciones_realizadas)}")
 print(f"\nEstadísticas adicionales:")
 print(f"Ganancias totales: ${ganancias_totales:.2f}")
 print(f"Pérdidas totales: ${perdidas_totales:.2f}")
